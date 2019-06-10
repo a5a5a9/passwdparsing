@@ -5,9 +5,9 @@ This Utility parses the UNIX /etc/passwd and /etc/groups files and combine the d
 
 Installation
 
-$ git clone 
+$ git clone https://github.com/adalandrade/passwdparsing.git
 
-$ cd PasswdParsing
+$ cd passwdparsing
 
 Then you can use the following options to run the script.
 
