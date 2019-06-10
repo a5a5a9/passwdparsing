@@ -1,20 +1,27 @@
-import pwd
-import grp
+import pwdd
+import grpp
 import json
 import os
 import argparse
+
+
+
+# Forms a dictionary of users with matching key/values from database
 
 def form_user_dict(user):
    user_dict = {}
    user_dict['name'] = user.pw_name
    user_dict['uid'] = user.pw_uid
    user_dict['full name'] = user.pw_gecos
-   group_names = list ( g.gr_name for g in grp.getgrall() if user.pw_name in g.gr_mem )
+   group_names = list ( g.gr_name for g in grpp.getgrall() if user.pw_name in g.gr_mem )
    user_dict['groups'] = group_names
    return user_dict
 
+# Gets ALL users from database
+
 def get_all_users():
-    all_users = pwd.getpwall()
+    all_user = []
+    all_users = pwdd.getpwall()
     all_user_list = []
     for user in all_users:
         user_dict = form_user_dict(user)
@@ -22,23 +29,24 @@ def get_all_users():
     return {d.pop('name'): d for d in all_user_list}
 
 
-
+# Print results
 def run_app(passwd_path, group_path):
-    os.environ['ETC_PASSWD'] = passwd_path
-    os.environ['ETC_GROUP'] = group_path
-    all_users = get_all_users()
-    print (json.dumps((all_users), indent=5))
-
-
-
+ 
+    todo_users = get_all_users()
+    print (json.dumps((todo_users), indent=5))
+    
+#
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument ('--run', '-r', action='store_true', help='run the program')
-    parser.add_argument ('--passwd','-p', help='passwd_path', default="/etc/passwd")
-    parser.add_argument ('--group','-g', help='group_path', default='/etc/group')
-   
+    parser = argparse.ArgumentParser(description = 'This is a Passwd Parser Program')
+    parser.add_argument ('--run', '-r',   action='store_true',  help='run the program')
+    parser.add_argument ('--passwd','-p', help='passwd_path', default='/etc/passwd')
+    parser.add_argument ('--group', '-g', help='group_path',  default='/etc/group')
+    
     args = parser.parse_args()
+    os.environ["ETC_PASSWD"] = args.passwd
+    os.environ["ETC_GROUP"] = args.group
+   
 
     if args.run:
         run_app(passwd_path=args.passwd, group_path=args.group)
