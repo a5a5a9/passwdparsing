@@ -20,7 +20,7 @@ def form_user_dict(user):
 # Gets ALL users from database
 
 def get_all_users():
-    all_user = []
+    all_users = []
     all_users = pwdd.getpwall()
     all_user_list = []
     for user in all_users:
@@ -35,24 +35,21 @@ def run_app(passwd_path, group_path):
     todo_users = get_all_users()
     print (json.dumps((todo_users), indent=5))
     
-#
 
 def main():
     parser = argparse.ArgumentParser(description = 'This is a Passwd Parser Program')
     parser.add_argument ('--run', '-r',   action='store_true',  help='run the program')
     parser.add_argument ('--passwd','-p', help='passwd_path', default='/etc/passwd')
     parser.add_argument ('--group', '-g', help='group_path',  default='/etc/group')
-    
     args = parser.parse_args()
     os.environ["ETC_PASSWD"] = args.passwd
     os.environ["ETC_GROUP"] = args.group
    
-
     if args.run:
         run_app(passwd_path=args.passwd, group_path=args.group)
        
     else:
-        print ("No arguments were introduced! See ya!")
+        print ("No arguments were introduced! Good Bye!")
 
     
 if __name__ == '__main__':
