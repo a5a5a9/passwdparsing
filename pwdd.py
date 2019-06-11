@@ -28,6 +28,7 @@ passwd_file -    the path of the password database file
 """
 
 import os
+import sys
 
 # class to match the new record field name accessors.
 # the resulting object is intended to behave like a read-only tuple,
@@ -72,10 +73,18 @@ class Passwd:
 # with dictionaries to speed recall by UID or passwd name
 def __read_passwd_file():
     if passwd_file:
-        passwd = open(passwd_file, 'r')
-        print(passwd_file)
+        try:
+            passwd = open(passwd_file, 'r')
+        except IOError as error:
+            print("No file(s) found, Good Bye!")
+            sys.exit(1)
+        except (ValueError, IndexError):
+            print("Incorrect format, Good Bye")
+            sys.exit(1)
+      
     else:
         raise KeyError('>> no password database <<')
+
     uidx = {}
     namx = {}
     sep = ':' 
@@ -98,7 +107,8 @@ def __read_passwd_file():
             break
     passwd.close()
     if len(uidx) == 0:
-        raise KeyError
+        raise KeyError('INVALID PASSWD FILE FORMAT!')
+        sys.exit(1)
     return (uidx, namx)
 
 
@@ -115,7 +125,14 @@ def getpwall():
     else:
         passwd_file = "/etc/passwd"
 
-    u, n = __read_passwd_file()
+    try:
+        u, n = __read_passwd_file()
+    except IndexError:
+        print ("ERROR:Invalid passwd file char format!!")
+        sys.exit(1)
+    except KeyError:
+        print ("ERROR:Invalid passwd file format!!")
+        sys.exit(1)
     return n.values()
 
 

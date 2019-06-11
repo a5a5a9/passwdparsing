@@ -34,6 +34,7 @@ group_file -     the path of the group database file
 """
 
 import os
+import sys
 
 # class to match the new record field name accessors.
 # the resulting object is intended to behave like a read-only tuple,
@@ -78,9 +79,18 @@ class Group:
 
 def __read_group_file():
     if group_file:
-        group = open(group_file, 'r')
+        try:
+            group = open(group_file, 'r')
+
+        except IOError:
+            print("No file(s) found, Good Bye!")
+            sys.exit(1)
+        except IndexError:
+            print("Incorrect format, Good Bye")
+            sys.exit(1)        
     else:
         raise KeyError('>> no group database <<')
+
     gidx = {}
     namx = {}
     sep = ':' 
@@ -101,8 +111,9 @@ def __read_group_file():
             break
     group.close()
     if len(gidx) == 0:
-        raise KeyError
+        raise KeyError('INVALID GROUP FILE FORMAT!')
     return (gidx, namx)
+    
 
 
 # return all the group database entries
@@ -116,7 +127,14 @@ def getgrall():
     else:
 	    group_file = "/etc/group"
 
-    g, n = __read_group_file()
+    try:
+        g, n = __read_group_file()
+    except IndexError:
+        print ("ERROR:Invalid group file char format!!")
+        sys.exit(1)
+    except KeyError:
+        print ("ERROR:Invalid group file format!!")
+        sys.exit(1)
     return g.values()
 
 # test harness

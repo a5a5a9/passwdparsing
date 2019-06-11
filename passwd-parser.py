@@ -29,7 +29,7 @@ def get_all_users():
     return {d.pop('name'): d for d in all_user_list}
 
 
-# Print results
+
 def run_app(passwd_path, group_path):
  
     todo_users = get_all_users()
@@ -38,9 +38,9 @@ def run_app(passwd_path, group_path):
 
 def main():
     parser = argparse.ArgumentParser(description = 'This is a Passwd Parser Program')
-    parser.add_argument ('--run', '-r',   action='store_true',  help='run the program')
-    parser.add_argument ('--passwd','-p', help='passwd_path', default='/etc/passwd')
-    parser.add_argument ('--group', '-g', help='group_path',  default='/etc/group')
+    parser.add_argument ('-r', '--run', action='store_true',  help='run the program')
+    parser.add_argument ('-p','--passwd', help='passwd_path', default='/etc/passwd')
+    parser.add_argument ('-g','--group', help='group_path',  default='/etc/group')
     args = parser.parse_args()
     os.environ["ETC_PASSWD"] = args.passwd
     os.environ["ETC_GROUP"] = args.group
