@@ -11,7 +11,7 @@ $ cd passwdparsing
 
 Then you can use the following options to run the script.
 
-$ python3 passwd-parser.py -run -p /path/to/your/file/passwd -g /path/to/your/file/group
+$ python3 passwd-parser.py -r -p /path/to/your/file/passwd -g /path/to/your/file/group
 
 usage: passwd-parser.py [-h] [--run] [--passwd PASSWD] [--group GROUP]
 
@@ -19,11 +19,10 @@ usage: passwd-parser.py [-h] [--run] [--passwd PASSWD] [--group GROUP]
 
 optional arguments:
   -h, --help            show this help message and exit
-  --run, -r             run the program
-  --passwd PASSWD, -p PASSWD
-                        passwd_path
-  --group GROUP, -g GROUP
-                        group_path
+  -r, --run             run the program
+  -p, --passwd          passwd_path
+  -g, --group           group_path                      
+  
 
 Default passwd path  '/etc/passwd'
 Default group path   '/etc/group'
