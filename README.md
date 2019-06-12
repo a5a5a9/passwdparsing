@@ -5,19 +5,18 @@ This Utility parses the UNIX /etc/passwd and /etc/groups files and combine the d
 
 ## Installation
 
-'''bash
+
 $ git clone https://github.com/adalandrade/passwdparsing.git
 
 $ cd passwdparsing
 
-'''
+
 
 ## Usage
 
-'''bash
+
 $ python3 passwd-parser.py -r -p /path/to/your/file/passwd -g /path/to/your/file/group
 
-'''
 
 usage: passwd-parser.py [-h] [--run] [--passwd PASSWD] [--group GROUP]
 
