@@ -1,17 +1,23 @@
-README
+# passwd-parser
 
 This Utility parses the UNIX /etc/passwd and /etc/groups files and combine the data into a single JSON output. 
 
 
-Installation
+## Installation
 
+'''bash
 $ git clone https://github.com/adalandrade/passwdparsing.git
 
 $ cd passwdparsing
 
-Then you can use the following options to run the script.
+'''
 
+## Usage
+
+'''bash
 $ python3 passwd-parser.py -r -p /path/to/your/file/passwd -g /path/to/your/file/group
+
+'''
 
 usage: passwd-parser.py [-h] [--run] [--passwd PASSWD] [--group GROUP]
 
